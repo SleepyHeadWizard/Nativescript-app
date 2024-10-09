@@ -1,0 +1,13 @@
+<Page class="page">
+  <ActionBar title="Quiz Question" class="action-bar"></ActionBar>
+  <StackLayout class="p-20">
+    <Label text="What is the capital of France?" class="h1"></Label>
+    <RadioGroup selectedIndex="0">
+      <RadioButton text="Berlin"></RadioButton>
+      <RadioButton text="Madrid"></RadioButton>
+      <RadioButton text="Paris"></RadioButton>
+      <RadioButton text="Rome"></RadioButton>
+    </RadioGroup>
+    <!-- <Button text="Submit" (tap)="submitAnswer()"></Button> -->
+  </StackLayout>
+</Page>

@@ -1,0 +1,6 @@
+<Page class="page" navigatingTo="onNavigatingTo">
+  <ActionBar visibility="collapsed"></ActionBar>
+  <StackLayout class="p-20" verticalAlignment="center" horizontalAlignment="center">
+    <Label text="Welcome to the Quiz App!" class="h1 text-center"></Label>
+  </StackLayout>
+</Page>
