@@ -1,5 +1,5 @@
-<Page class="page" navigatingTo="onNavigatingTo">
-  <ActionBar title="Login" class="action-bar" visibility="collapsed"></ActionBar>
+<Page class="page" navigatingTo="onNavigatingTo" actionBarHidden="true">
+  <!-- <ActionBar title="Login" class="action-bar" visibility="collapsed"></ActionBar> -->
   <StackLayout class="p-20">
     <Label text="Login to Continue" class="h1 text-center m-20"></Label>
     <TextField hint="Enter your username" class="input input-border m-20"></TextField>

@@ -8,8 +8,8 @@ export function onNavigatingTo(args: EventData) {
 
   setTimeout(() => {
     Frame.topmost().navigate({
-      moduleName: "login-page",
+      moduleName: "login/login-page",
       clearHistory: true
     });
-  }, 2000); // 2 seconds delay
+  }, 5000); // 5 seconds delay
 }
