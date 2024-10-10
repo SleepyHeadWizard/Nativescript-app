@@ -1,61 +1,84 @@
-import { Button, EventData, ListPicker, Page, ShowModalOptions } from "@nativescript/core";
-import { Frame } from "@nativescript/core/ui/frame";
+import { EventData, Observable } from '@nativescript/core';
+import { Page } from '@nativescript/core/ui/page';
+import { Frame } from '@nativescript/core/ui/frame';
+
+class CategoryViewModel extends Observable {
+    categories: { id: number, name: string }[] = [
+        { id: 9, name: "General Knowledge" },
+        { id: 10, name: "Entertainment: Books" },
+        { id: 11, name: "Entertainment: Film" },
+        { id: 12, name: "Entertainment: Music" },
+        { id: 13, name: "Entertainment: Musicals & Theatres" },
+        { id: 14, name: "Entertainment: Television" },
+        { id: 15, name: "Entertainment: Video Games" },
+        { id: 16, name: "Entertainment: Board Games" },
+        { id: 17, name: "Science & Nature" },
+        { id: 18, name: "Science: Computers" },
+        { id: 19, name: "Science: Mathematics" },
+        { id: 20, name: "Mythology" },
+        { id: 21, name: "Sports" },
+        { id: 22, name: "Geography" },
+        { id: 23, name: "History" },
+        { id: 24, name: "Politics" },
+        { id: 25, name: "Art" },
+        { id: 26, name: "Celebrities" },
+        { id: 27, name: "Animals" },
+        { id: 28, name: "Vehicles" },
+        { id: 29, name: "Entertainment: Comics" },
+        { id: 30, name: "Science: Gadgets" },
+        { id: 31, name: "Entertainment: Japanese Anime & Manga" },
+        { id: 32, name: "Entertainment: Cartoon & Animations" }
+    ];
+    categoryNames: string[] = this.categories.map(category => category.name);
+    numberOfQuestions: number[] = [5, 10, 15, 20, 25, 30];
+    difficulties: string[] = ["Easy", "Medium", "Hard"];
+    selectedCategoryIndex: number = 0;
+    selectedNumberOfQuestionsIndex: number = 0;
+    selectedDifficultyIndex: number = 0;
+
+    constructor() {
+        super();
+        this.notifyPropertyChange("categoryNames", this.categoryNames);
+        this.notifyPropertyChange("numberOfQuestions", this.numberOfQuestions);
+        this.notifyPropertyChange("difficulties", this.difficulties);
+    }
+}
+
+let viewModel: CategoryViewModel;
 
 export function onNavigatingTo(args: EventData) {
     const page = <Page>args.object;
-    page.bindingContext = {
-        items: [
-            "General Knowledge",
-            "Entertainment: Books",
-            "Entertainment: Film",
-            "Entertainment: Music",
-            "Entertainment: Television",
-            "Entertainment: Video Games",
-            "Entertainment: Board Games",
-            "Science & Nature",
-            "Science: Computers",
-            "Science: Mathematics",
-            "Mythology",
-            "Sports",
-            "Geography",
-            "History",
-            "Politics",
-            "Art",
-            "Celebrities",
-            "Animals",
-            "Vehicles",
-            "Entertainment: Comics",
-            "Science: Gadgets",
-            "Entertainment: Japanese Anime & Manga",
-            "Entertainment: Cartoon & Animations"
-        ]
-    };
+    viewModel = new CategoryViewModel();
+    page.bindingContext = viewModel;
 }
 
-export function onNextTap(args: EventData) {
-    const button = <Button>args.object;
-    const page = <Page>button.page;
-    const categoryPicker = <ListPicker>page.getViewById("categoryPicker");
-    const selectedCategoryIndex = categoryPicker.selectedIndex;
+export function onSelectedIndexChange(args: EventData) {
+    const picker = <any>args.object;
+    const id = picker.id;
 
-    const options: ShowModalOptions = {
-        context: { category: selectedCategoryIndex },
-        closeCallback: (result) => {
-            if (result) {
-                const category = selectedCategoryIndex + 9; // Adjust based on your category list
-                const difficulty = ["easy", "medium", "hard"][result.difficulty];
-                const amount = result.questionCount;
+    if (id === "categoryPicker") {
+        viewModel.selectedCategoryIndex = picker.selectedIndex;
+    } else if (id === "numberOfQuestionsPicker") {
+        viewModel.selectedNumberOfQuestionsIndex = picker.selectedIndex;
+    } else if (id === "difficultyPicker") {
+        viewModel.selectedDifficultyIndex = picker.selectedIndex;
+    }
+}
 
-                const apiUrl = `https://opentdb.com/api.php?amount=${amount}&category=${category}&difficulty=${difficulty}&type=multiple`;
+export function onNextTap() {
+    const selectedCategory = viewModel.categories[viewModel.selectedCategoryIndex];
+    const selectedNumberOfQuestions = viewModel.numberOfQuestions[viewModel.selectedNumberOfQuestionsIndex];
+    const selectedDifficulty = viewModel.difficulties[viewModel.selectedDifficultyIndex];
 
-                Frame.topmost().navigate({
-                    moduleName: "question/question-page",
-                    context: { apiUrl: apiUrl }
-                });
-            }
+    const navigationEntry = {
+        moduleName: "question/question-page",
+        context: {
+            category: selectedCategory.id,
+            numberOfQuestions: selectedNumberOfQuestions,
+            difficulty: selectedDifficulty
         },
-        fullscreen: true
+        clearHistory: true
     };
 
-    page.showModal("modal-page", options);
+    Frame.topmost().navigate(navigationEntry);
 }
