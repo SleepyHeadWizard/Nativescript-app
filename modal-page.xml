@@ -1,0 +1,12 @@
+<Page xmlns="http://schemas.nativescript.org/tns.xsd" shownModally="onShownModally">
+    <ActionBar title="Select Options" />
+    <StackLayout>
+        <Label text="Select Number of Questions:" />
+        <TextField id="questionCount" keyboardType="number" />
+        
+        <Label text="Select Difficulty:" />
+        <ListPicker id="difficultyPicker" items="{{ difficulties }}" />
+        
+        <Button text="Submit" tap="onSubmitTap" />
+    </StackLayout>
+</Page>

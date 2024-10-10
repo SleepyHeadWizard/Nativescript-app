@@ -9,7 +9,6 @@ export function onNavigatingTo(args: EventData) {
   setTimeout(() => {
     Frame.topmost().navigate({
       moduleName: "login/login-page",
-      clearHistory: true
     });
   }, 5000); // 5 seconds delay
 }

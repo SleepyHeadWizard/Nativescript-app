@@ -1,8 +1,6 @@
-import { EventData } from '@nativescript/core';
+import { Button, EventData } from '@nativescript/core';
 import { Page } from '@nativescript/core/ui/page';
 import { Http } from '@nativescript/core';
-import { RadioGroup } from '@nativescript/core';
-
 
 export function onNavigatingTo(args: EventData) {
   const page = <Page>args.object;
@@ -18,15 +16,34 @@ export function onNavigatingTo(args: EventData) {
     page.bindingContext = {
       question: question,
       answers: answers,
-      correctAnswer: correctAnswer
+      correctAnswer: correctAnswer,
+      selectedIndex: -1 // Initialize selected index
     };
+  });
+}
+
+export function selectAnswer(args: EventData) {
+  const button = <Button>args.object;
+  const page = <Page>button.page;
+  const selectedIndex = page.bindingContext.answers.indexOf(button.text);
+  page.bindingContext.selectedIndex = selectedIndex;
+
+  // Update button styles to indicate selection
+  const buttonGroup = page.getViewById("buttonGroup");
+  buttonGroup.eachChild((child) => {
+    if (child.className.includes("selected")) {
+      child.className = child.className.replace(" selected", "");
+    }
+    if (child === button) {
+      child.className += " selected";
+    }
+    return true;
   });
 }
 
 export function submitAnswer(args: EventData) {
   const page = <Page>(<any>args.object).page;
-  const radioGroup = <RadioGroup>page.getViewById("radioGroup");
-  const selectedIndex = radioGroup.selectedIndex;
+  const selectedIndex = page.bindingContext.selectedIndex;
   const selectedAnswer = page.bindingContext.answers[selectedIndex];
 
   if (selectedAnswer === page.bindingContext.correctAnswer) {
@@ -36,4 +53,5 @@ export function submitAnswer(args: EventData) {
   }
 
   // Perform any additional actions, such as navigation or showing a message
+  // For example, navigate to a results page or show a dialog
 }
