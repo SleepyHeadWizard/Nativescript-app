@@ -1,4 +1,5 @@
-import { Button, EventData, ListPicker, Page, PropertyChangeData, ShowModalOptions } from "@nativescript/core";
+import { Button, EventData, ListPicker, Page, ShowModalOptions } from "@nativescript/core";
+import { Frame } from "@nativescript/core/ui/frame";
 
 export function onNavigatingTo(args: EventData) {
     const page = <Page>args.object;
@@ -8,7 +9,6 @@ export function onNavigatingTo(args: EventData) {
             "Entertainment: Books",
             "Entertainment: Film",
             "Entertainment: Music",
-            "Entertainment: Musicals & Theatres",
             "Entertainment: Television",
             "Entertainment: Video Games",
             "Entertainment: Board Games",
@@ -42,17 +42,20 @@ export function onNextTap(args: EventData) {
         context: { category: selectedCategoryIndex },
         closeCallback: (result) => {
             if (result) {
-                console.log(`Number of Questions: ${result.questionCount}`);
-                console.log(`Selected Difficulty: ${result.difficulty}`);
+                const category = selectedCategoryIndex + 9; // Adjust based on your category list
+                const difficulty = ["easy", "medium", "hard"][result.difficulty];
+                const amount = result.questionCount;
+
+                const apiUrl = `https://opentdb.com/api.php?amount=${amount}&category=${category}&difficulty=${difficulty}&type=multiple`;
+
+                Frame.topmost().navigate({
+                    moduleName: "question/question-page",
+                    context: { apiUrl: apiUrl }
+                });
             }
         },
         fullscreen: true
     };
 
     page.showModal("modal-page", options);
-}
-
-export function onSelectedIndexChange(args: PropertyChangeData) {
-    const picker = <ListPicker>args.object;
-    console.log('selectedIndex changed to', args.value);
 }

@@ -1,5 +1,5 @@
-<Page xmlns="http://schemas.nativescript.org/tns.xsd" navigatingTo="onNavigatingTo">
-    <ActionBar title="Select Category" />
+<Page xmlns="http://schemas.nativescript.org/tns.xsd" navigatingTo="onNavigatingTo" actionBarHidden="true">
+    <!-- <ActionBar title="Select Category" /> -->
     <StackLayout>
         <Label text="Select a Category:" />
         <ListPicker id="categoryPicker" items="{{ items }}" selectedIndexChange="onSelectedIndexChange" />

@@ -4,3 +4,25 @@
 Button.-primary {
   font-size: 18;
 }
+
+.btn-container {
+  justify-content: space-around;
+  margin: 20px;
+}
+.h1 {
+  font-size: 20;
+  color: white;
+}
+.h2 {
+  font-size: 18;
+  color: white;
+  padding: 10;
+}
+.timer {
+  font-size: 18;
+  color: white;
+  background-color: #ff6b6b;
+  padding: 10;
+  border-radius: 20;
+  text-align: center;
+}

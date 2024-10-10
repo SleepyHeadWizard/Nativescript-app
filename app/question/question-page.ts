@@ -1,57 +1,88 @@
-import { Button, EventData } from '@nativescript/core';
-import { Page } from '@nativescript/core/ui/page';
-import { Http } from '@nativescript/core';
+import { Observable, Page, EventData, Http } from "@nativescript/core";
+import { Frame } from "@nativescript/core/ui/frame";
 
+class QuestionViewModel extends Observable {
+    data = [];
+    currentQuestion = { question: "", category: "", difficulty: "" };
+    number = 0;
+    score = 0;
+    timerSeconds = "00";
+    timerMinutes = "00";
+    secondsElapsed = 0;
+    incrementer: any;
+    apiUrl: '' ;
+
+    constructor(apiUrl: string) {
+        super();
+        this.fetchQuestions(apiUrl);
+        this.startTimer();
+    }
+
+    fetchQuestions(apiUrl: string) {
+        Http.getJSON(apiUrl)
+            .then((response: any) => {
+                this.data = response.results;
+                this.setCurrentQuestion();
+            })
+            .catch((error) => {
+                console.error(error);
+            });
+    }
+
+    setCurrentQuestion() {
+        if (this.number < this.data.length) {
+            this.currentQuestion = this.data[this.number];
+            this.notifyPropertyChange("currentQuestion", this.currentQuestion);
+        } else {
+            this.finishQuiz();
+        }
+    }
+
+    onAnswerTrue() {
+        this.checkAnswer(true);
+    }
+
+    onAnswerFalse() {
+        this.checkAnswer(false);
+    }
+
+    checkAnswer(answer: boolean) {
+        const correctAnswer = this.data[this.number].correct_answer === "True";
+        if (answer === correctAnswer) {
+            this.score += 1;
+        }
+
+        this.number += 1;
+        this.notifyPropertyChange("number", this.number);
+        this.setCurrentQuestion();
+    }
+
+    startTimer() {
+        this.incrementer = setInterval(() => {
+            this.secondsElapsed += 1;
+            this.timerMinutes = Math.floor(this.secondsElapsed / 60).toString().padStart(2, "0");
+            this.timerSeconds = (this.secondsElapsed % 60).toString().padStart(2, "0");
+            this.notifyPropertyChange("timerMinutes", this.timerMinutes);
+            this.notifyPropertyChange("timerSeconds", this.timerSeconds);
+        }, 1000);
+    }
+
+    stopTimer() {
+        clearInterval(this.incrementer);
+    }
+
+    finishQuiz() {
+        this.stopTimer();
+        Frame.topmost().navigate({
+            moduleName: "result/result-page",
+            context: { data: this.data, score: this.score }
+        });
+    }
+}
+
+// onNavigatingTo event handler
 export function onNavigatingTo(args: EventData) {
-  const page = <Page>args.object;
-  
-  // Fetch a question from the Open Trivia Database API
-  Http.getJSON("https://opentdb.com/api.php?amount=1&type=multiple").then((response: any) => {
-    const questionData = response.results[0];
-    const question = questionData.question;
-    const correctAnswer = questionData.correct_answer;
-    const incorrectAnswers = questionData.incorrect_answers;
-    const answers = [...incorrectAnswers, correctAnswer].sort(() => Math.random() - 0.5);
-
-    page.bindingContext = {
-      question: question,
-      answers: answers,
-      correctAnswer: correctAnswer,
-      selectedIndex: -1 // Initialize selected index
-    };
-  });
-}
-
-export function selectAnswer(args: EventData) {
-  const button = <Button>args.object;
-  const page = <Page>button.page;
-  const selectedIndex = page.bindingContext.answers.indexOf(button.text);
-  page.bindingContext.selectedIndex = selectedIndex;
-
-  // Update button styles to indicate selection
-  const buttonGroup = page.getViewById("buttonGroup");
-  buttonGroup.eachChild((child) => {
-    if (child.className.includes("selected")) {
-      child.className = child.className.replace(" selected", "");
-    }
-    if (child === button) {
-      child.className += " selected";
-    }
-    return true;
-  });
-}
-
-export function submitAnswer(args: EventData) {
-  const page = <Page>(<any>args.object).page;
-  const selectedIndex = page.bindingContext.selectedIndex;
-  const selectedAnswer = page.bindingContext.answers[selectedIndex];
-
-  if (selectedAnswer === page.bindingContext.correctAnswer) {
-    console.log("Correct answer!");
-  } else {
-    console.log("Incorrect answer.");
-  }
-
-  // Perform any additional actions, such as navigation or showing a message
-  // For example, navigate to a results page or show a dialog
+    const page = <Page>args.object;
+    const apiUrl = page.navigationContext.apiUrl;
+    page.bindingContext = new QuestionViewModel(apiUrl);
 }
