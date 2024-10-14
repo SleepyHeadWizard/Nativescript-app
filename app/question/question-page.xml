@@ -1,10 +1,10 @@
-<Page xmlns="http://schemas.nativescript.org/tns.xsd" navigatingTo="onNavigatingTo" actionBarHidden="true">
+<Page xmlns="http://schemas.nativescript.org/tns.xsd" navigatingTo="onNavigatingTo">
+    <ActionBar title="Questions" />
     <StackLayout>
-        <WebView id="webView" src="~/fetch-data.html" height="0" width="0" />
-        <Label text="{{ currentQuestion }}" textWrap="true" class="question-label" />
-        <ListView items="{{ currentAnswers }}" itemTap="onAnswerTap">
+        <Label text="{{ currentQuestion.value }}" textWrap="true" />
+        <ListView items="{{ currentQuestion.allAnswers }}">
             <ListView.itemTemplate>
-                <Label text="{{ $value }}" class="answer-label" />
+                <Label text="{{ $value }}" />
             </ListView.itemTemplate>
         </ListView>
         <Button text="Next" tap="onNextTap" />

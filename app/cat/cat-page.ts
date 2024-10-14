@@ -73,9 +73,9 @@ export function onNextTap() {
     const navigationEntry = {
         moduleName: "question/question-page",
         context: {
-            category: selectedCategory.id,
+            category: selectedCategory.name,
             numberOfQuestions: selectedNumberOfQuestions,
-            difficulty: selectedDifficulty
+            difficulty: selectedDifficulty.toLowerCase()
         },
         clearHistory: true
     };
