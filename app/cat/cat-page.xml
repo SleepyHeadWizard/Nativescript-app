@@ -1,14 +1,14 @@
-<Page xmlns="http://schemas.nativescript.org/tns.xsd" navigatingTo="onNavigatingTo" actionBarHidden="true">
-    <StackLayout>
-        <Label text="Select a Category:" />
-        <ListPicker id="categoryPicker" items="{{ categoryNames }}" selectedIndexChange="onSelectedIndexChange" />
-        
-        <Label text="Select Number of Questions:" />
-        <ListPicker id="numberOfQuestionsPicker" items="{{ numberOfQuestions }}" selectedIndexChange="onSelectedIndexChange" />
-        
-        <Label text="Select Difficulty:" />
-        <ListPicker id="difficultyPicker" items="{{ difficulties }}" selectedIndexChange="onSelectedIndexChange" />
-        
-        <Button text="Next" tap="onNextTap" />
-    </StackLayout>
+<Page class="page" navigatingTo="onNavigatingTo" actionBarHidden="true" cssFile="cat/cat-page.css">
+  <StackLayout class="container">
+    <Label text="Select a Category:" class="label" textAlignment="center" />
+    <ListPicker id="categoryPicker" items="{{ categoryNames }}" selectedIndexChange="onSelectedIndexChange" class="picker" />
+    
+    <Label text="Select Number of Questions:" class="label" textAlignment="center" />
+    <ListPicker id="numberOfQuestionsPicker" items="{{ numberOfQuestions }}" selectedIndexChange="onSelectedIndexChange" class="picker" />
+    
+    <Label text="Select Difficulty:" class="label" textAlignment="center" />
+    <ListPicker id="difficultyPicker" items="{{ difficulties }}" selectedIndexChange="onSelectedIndexChange" class="picker" />
+    
+    <Button text="Next" tap="onNextTap" class="next-button" textAlignment="center" />
+  </StackLayout>
 </Page>

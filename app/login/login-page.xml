@@ -1,9 +1,21 @@
-<Page class="page" navigatingTo="onNavigatingTo" actionBarHidden="true">
-  <!-- <ActionBar title="Login" class="action-bar" visibility="collapsed"></ActionBar> -->
-  <StackLayout class="p-20">
-    <Label text="Login to Continue" class="h1 text-center m-20"></Label>
-    <TextField hint="Enter your username" class="input input-border m-20"></TextField>
-    <TextField hint="Enter your password" secure="true" class="input input-border m-20"></TextField>
-    <Button text="Login" tap="goToQuestionPage" class="-primary m-20"></Button>
-  </StackLayout>
+<Page class="page" navigatingTo="onNavigatingTo" actionBarHidden="true" cssFile="login/login-page.css">
+    <StackLayout class="center-layout" verticalAlignment="center">
+        <!-- Header Section -->
+        <Label text="Welcome To Login Page" class="header-text" horizontalAlignment="center" />
+
+        <!-- Input Fields Section -->
+        <StackLayout class="input-fields-container">
+            <TextField hint="Username" class="input-field" />
+            <TextField hint="Password" secure="true" class="input-field" />
+            <TextField hint="Class" class="input-field" />
+            <TextField hint="Phone Number" class="input-field" />
+            <TextField hint="School Name" class="input-field" />
+        </StackLayout>
+
+        <!-- Login Button -->
+        <Button text="Login" tap="goToQuestionPage" class="login-button" />
+        
+        <!-- Optional: Add a "Forgot Password?" link -->
+        <Label text="Forgot Password?" class="forgot-password-text" tap="onForgotPasswordTap" />
+    </StackLayout>
 </Page>

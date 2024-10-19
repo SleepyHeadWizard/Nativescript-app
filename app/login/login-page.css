@@ -1,0 +1,44 @@
+.page {
+    background: linear-gradient(15deg, #13547a 0%, #80d0c7 100%);
+}
+
+.center-layout {
+    padding: 20px;
+}
+
+
+.header-text {
+    font-size: 30px; 
+    font-weight: bold;
+    color: #333; 
+    margin-bottom: 30px; 
+    text-align: center; 
+}
+
+
+.input-fields-container {
+    margin-bottom: 20px; 
+}
+
+.input-field {
+    font-size: 18px;
+    padding: 10px; 
+    border-radius: 5px;
+    border: 1px solid #ccc; 
+    margin-bottom: 15px; 
+}
+
+/* Login button styling */
+.login-button {
+    background: linear-gradient(to right, rgb(242, 112, 156), rgb(255, 148, 114)); 
+    color: white; 
+    font-size: 18px; 
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.forgot-password-text {
+    font-size: 16px; 
+    color: #007BFF; 
+    text-align: center;
+}
