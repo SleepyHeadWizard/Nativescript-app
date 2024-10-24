@@ -1,5 +1,5 @@
-<Page class="page" navigatingTo="onNavigatingTo" actionBarHidden="true" cssFile="welcome/welcome-page.css">
-  <StackLayout class="container" verticalAlignment="center" horizontalAlignment="center">
-    <Label text="Welcome to FactoMania!" class="welcome-text" textWrap="true" ></Label>
+<Page class="page" navigatingTo="onNavigatingTo" actionBarHidden="true">
+  <StackLayout class="p-20" verticalAlignment="center" horizontalAlignment="center">
+    <Label text="Welcome to the Quiz App!" class="h1 text-center"></Label>
   </StackLayout>
 </Page>
