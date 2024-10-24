@@ -1,30 +1,34 @@
 import { EventData, Observable } from '@nativescript/core';
 import { Page } from '@nativescript/core/ui/page';
-import { Frame } from '@nativescript/core/ui/frame';
-import * as fs from '@nativescript/core/file-system';
-import { knownFolders } from '@nativescript/core/file-system';
+import { getQuestions, Question } from './question';
 
 class QuestionViewModel extends Observable {
-    questions: any[];
+    questions: Question[] = [];
     currentQuestionIndex: number = 0;
+    score: number = 0;
+    quizCompleted: boolean = false;
 
-    constructor(questions: any[]) {
+    constructor(category: string, difficulty: string, numberOfQuestions: number) {
         super();
-        this.questions = questions;
-        this.notifyPropertyChange("currentQuestion", this.questions[this.currentQuestionIndex]);
+        const allQuestions = getQuestions();
+        this.questions = allQuestions.filter(q => 
+            q.category === category && 
+            q.difficulty === difficulty
+        ).slice(0, numberOfQuestions);
+        this.notifyPropertyChange("questions", this.questions);
     }
 
-    get currentQuestion() {
-        return this.questions[this.currentQuestionIndex];
-    }
-
-    nextQuestion() {
+    handleAnswer(selectedOption: string) {
+        if (selectedOption === this.questions[this.currentQuestionIndex].correct_answer) {
+            this.score++;
+        }
         if (this.currentQuestionIndex < this.questions.length - 1) {
             this.currentQuestionIndex++;
-            this.notifyPropertyChange("currentQuestion", this.questions[this.currentQuestionIndex]);
         } else {
-            // Navigate to result page or show a message
+            this.quizCompleted = true;
         }
+        this.notifyPropertyChange("currentQuestionIndex", this.currentQuestionIndex);
+        this.notifyPropertyChange("quizCompleted", this.quizCompleted);
     }
 }
 
@@ -33,22 +37,18 @@ let viewModel: QuestionViewModel;
 export function onNavigatingTo(args: EventData) {
     const page = <Page>args.object;
     const context = page.navigationContext;
-
-    const documents = knownFolders.currentApp();
-    const file = documents.getFile('app/question/question.json');
-
-    file.readText().then((content) => {
-        const questions = JSON.parse(content);
-        const filteredQuestions = questions.filter(q => 
-            q.category === context.category && 
-            q.difficulty === context.difficulty
-        ).slice(0, context.numberOfQuestions);
-
-        viewModel = new QuestionViewModel(filteredQuestions);
-        page.bindingContext = viewModel;
-    });
+    viewModel = new QuestionViewModel(context.category, context.difficulty, context.numberOfQuestions);
+    page.bindingContext = viewModel;
 }
 
-export function onNextTap() {
-    viewModel.nextQuestion();
+export function onSubmitTap(args: EventData) {
+    const navigationEntry = {
+        moduleName: "result-page",
+        context: {
+            score: viewModel.score,
+            totalQuestions: viewModel.questions.length
+        }
+    };
+    const page = <Page>args.object;
+    page.frame.navigate(navigationEntry);
 }

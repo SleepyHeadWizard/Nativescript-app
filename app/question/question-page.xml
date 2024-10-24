@@ -1,12 +1,19 @@
-<Page xmlns="http://schemas.nativescript.org/tns.xsd" navigatingTo="onNavigatingTo">
-    <ActionBar title="Questions" />
+<Page xmlns="http://schemas.nativescript.org/tns.xsd" navigatingTo="onNavigatingTo" actionBarHidden="true">
     <StackLayout>
-        <Label text="{{ currentQuestion.value }}" textWrap="true" />
-        <ListView items="{{ currentQuestion.allAnswers }}">
+        <Label text="Questions" class="h1" />
+        <ListView items="{{ questions }}">
             <ListView.itemTemplate>
-                <Label text="{{ $value }}" />
+                <StackLayout>
+                    <Label text="{{ question }}" class="question-label" />
+                    <StackLayout>
+                        <Label text="{{ correct_answer }}" class="answer-label" />
+                        <Label text="{{ incorrect_answers[0] }}" class="answer-label" />
+                        <Label text="{{ incorrect_answers[1] }}" class="answer-label" />
+                        <Label text="{{ incorrect_answers[2] }}" class="answer-label" />
+                    </StackLayout>
+                </StackLayout>
             </ListView.itemTemplate>
         </ListView>
-        <Button text="Next" tap="onNextTap" />
+        <Button text="Submit" tap="onSubmitTap" />
     </StackLayout>
 </Page>

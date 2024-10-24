@@ -1,0 +1,7 @@
+<Page xmlns="http://schemas.nativescript.org/tns.xsd" navigatingTo="onNavigatingTo" actionBarHidden="true">
+    <StackLayout>
+        <Label text="Your Score: {{ score }}" class="h1" />
+        <Label text="Total Questions: {{ totalQuestions }}" class="h2" />
+        <Button text="Retake Quiz" tap="onRetakeQuizTap" />
+    </StackLayout>
+</Page>
