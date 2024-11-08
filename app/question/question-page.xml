@@ -1,19 +1,24 @@
-<Page xmlns="http://schemas.nativescript.org/tns.xsd" navigatingTo="onNavigatingTo" actionBarHidden="true">
-    <StackLayout>
-        <Label text="Questions" class="h1" />
-        <ListView items="{{ questions }}">
+<Page xmlns="http://schemas.nativescript.org/tns.xsd" navigatingTo="onNavigatingTo" class="page">
+    <ActionBar title="Quiz" />
+    <StackLayout class="question-container">
+        <Label
+            text="{{ questions.length > 0 ? questions[currentQuestionIndex].question : 'No questions available' }}"
+            class="question-label"
+            textWrap="true" />
+        <ListView
+            items="{{ questions.length > 0 ? questions[currentQuestionIndex].answers : [] }}"
+            class="options-list"
+            itemTap="handleOptionSelect">
             <ListView.itemTemplate>
-                <StackLayout>
-                    <Label text="{{ question }}" class="question-label" />
-                    <StackLayout>
-                        <Label text="{{ correct_answer }}" class="answer-label" />
-                        <Label text="{{ incorrect_answers[0] }}" class="answer-label" />
-                        <Label text="{{ incorrect_answers[1] }}" class="answer-label" />
-                        <Label text="{{ incorrect_answers[2] }}" class="answer-label" />
-                    </StackLayout>
+                <StackLayout class="option-item">
+                    <Label text="{{ $value }}" class="answer-label" textWrap="true" />
                 </StackLayout>
             </ListView.itemTemplate>
         </ListView>
-        <Button text="Submit" tap="onSubmitTap" />
+        <Button
+            text="Submit"
+            tap="handleSubmit"
+            visibility="{{ quizCompleted ? 'visible' : 'collapsed' }}"
+            class="submit-btn" />
     </StackLayout>
 </Page>

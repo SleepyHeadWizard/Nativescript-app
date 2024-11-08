@@ -1,14 +1,14 @@
-<Page xmlns="http://schemas.nativescript.org/tns.xsd" navigatingTo="onNavigatingTo" actionBarHidden="true">
+<Page xmlns="http://schemas.nativescript.org/tns.xsd" navigatingTo="onNavigatingTo" actionBarHidden="true" class="page">
     <StackLayout>
-        <Label text="Select a Category:" />
-        <ListPicker id="categoryPicker" items="{{ categoryNames }}" selectedIndexChange="onSelectedIndexChange" />
+        <Label text="Select a Category:" class="h2" />
+        <ListPicker id="categoryPicker" items="{{ categoryNames }}" selectedIndex="{{ selectedCategoryIndex }}" />
         
-        <Label text="Select Number of Questions:" />
-        <ListPicker id="numberOfQuestionsPicker" items="{{ numberOfQuestions }}" selectedIndexChange="onSelectedIndexChange" />
+        <Label text="Select Number of Questions:" class="h2" />
+        <ListPicker id="numberOfQuestionsPicker" items="{{ numberOfQuestions }}" selectedIndex="{{ selectedNumberOfQuestionsIndex }}" />
         
-        <Label text="Select Difficulty:" />
-        <ListPicker id="difficultyPicker" items="{{ difficulties }}" selectedIndexChange="onSelectedIndexChange" />
+        <Label text="Select Difficulty:" class="h2" />
+        <ListPicker id="difficultyPicker" items="{{ difficulties }}" selectedIndex="{{ selectedDifficultyIndex }}" />
         
-        <Button text="Next" tap="onNextTap" />
+        <Button text="Next" tap="onNextTap" class="submit-btn" />
     </StackLayout>
 </Page>

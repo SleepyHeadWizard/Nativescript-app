@@ -3,7 +3,7 @@ import { Page } from '@nativescript/core/ui/page';
 import { Frame } from '@nativescript/core/ui/frame';
 
 class CategoryViewModel extends Observable {
-    categories: { id: number, name: string }[] = [
+    categories: { id: number; name: string }[] = [
         { id: 9, name: "General Knowledge" },
         { id: 10, name: "Entertainment: Books" },
         { id: 11, name: "Entertainment: Film" },
@@ -47,22 +47,9 @@ class CategoryViewModel extends Observable {
 let viewModel: CategoryViewModel;
 
 export function onNavigatingTo(args: EventData) {
-    const page = <Page>args.object;
+    const page = args.object as Page;
     viewModel = new CategoryViewModel();
     page.bindingContext = viewModel;
-}
-
-export function onSelectedIndexChange(args: EventData) {
-    const picker = <any>args.object;
-    const id = picker.id;
-
-    if (id === "categoryPicker") {
-        viewModel.selectedCategoryIndex = picker.selectedIndex;
-    } else if (id === "numberOfQuestionsPicker") {
-        viewModel.selectedNumberOfQuestionsIndex = picker.selectedIndex;
-    } else if (id === "difficultyPicker") {
-        viewModel.selectedDifficultyIndex = picker.selectedIndex;
-    }
 }
 
 export function onNextTap() {
@@ -70,12 +57,17 @@ export function onNextTap() {
     const selectedNumberOfQuestions = viewModel.numberOfQuestions[viewModel.selectedNumberOfQuestionsIndex];
     const selectedDifficulty = viewModel.difficulties[viewModel.selectedDifficultyIndex];
 
+    console.log('Selected Category:', selectedCategory.name);
+    console.log('Selected Category ID:', selectedCategory.id);
+    console.log('Selected Number of Questions:', selectedNumberOfQuestions);
+    console.log('Selected Difficulty:', selectedDifficulty);
+
     const navigationEntry = {
         moduleName: "question/question-page",
         context: {
-            category: selectedCategory.name,
-            numberOfQuestions: selectedNumberOfQuestions,
-            difficulty: selectedDifficulty.toLowerCase()
+            categoryId: selectedCategory.id,
+            difficulty: selectedDifficulty.toLowerCase(),
+            numberOfQuestions: selectedNumberOfQuestions
         },
         clearHistory: true
     };
