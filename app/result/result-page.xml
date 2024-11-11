@@ -1,7 +1,24 @@
-<Page class="page">
-  <ActionBar title="Quiz Result" class="action-bar"></ActionBar>
-  <StackLayout class="p-20">
-    <Label text="You scored 1 out of 1" class="h1"></Label>
-    <!-- <Button text="Go to Welcome Page" (tap)="goToWelcome()"></Button> -->
-  </StackLayout>
+<Page xmlns="http://schemas.nativescript.org/tns.xsd"
+      navigatingTo="onNavigatingTo"
+      class="page">
+    <ActionBar title="Quiz Results" />
+    <StackLayout class="result-container">
+        <Label text="{{ congratulatoryMessage }}" class="h1 score-label" />
+        <Progress value="{{ percentage }}" maxValue="100" class="score-progress" />
+
+        <ListView items="{{ questionResults }}" class="questions-list">
+            <ListView.itemTemplate>
+                <StackLayout class="question-item">
+                    <Label text="{{ question }}" class="question-label" textWrap="true" />
+                    <Label text="{{ userAnswer }}" class="{{ isCorrect ? 'user-answer-correct' : 'user-answer-incorrect' }}" textWrap="true" />
+                    <Label text="{{ correctAnswer }}" class="correct-answer-label" textWrap="true" />
+                </StackLayout>
+            </ListView.itemTemplate>
+        </ListView>
+
+        <StackLayout orientation="horizontal" class="button-container">
+            <Button text="Retake Quiz" tap="onRetakeQuizTap" class="btn-retake" />
+            <Button text="Back to Home" tap="onBackToHomeTap" class="btn-home" />
+        </StackLayout>
+    </StackLayout>
 </Page>

@@ -1,13 +1,24 @@
-<Page class="page">
-  <ActionBar title="Quiz Question" class="action-bar"></ActionBar>
-  <StackLayout class="p-20">
-    <Label text="What is the capital of France?" class="h1"></Label>
-    <RadioGroup selectedIndex="0">
-      <RadioButton text="Berlin"></RadioButton>
-      <RadioButton text="Madrid"></RadioButton>
-      <RadioButton text="Paris"></RadioButton>
-      <RadioButton text="Rome"></RadioButton>
-    </RadioGroup>
-    <!-- <Button text="Submit" (tap)="submitAnswer()"></Button> -->
-  </StackLayout>
+<Page xmlns="http://schemas.nativescript.org/tns.xsd" navigatingTo="onNavigatingTo" class="page">
+    <ActionBar title="Quiz" />
+    <StackLayout class="question-container">
+        <Label
+            text="{{ questions.length > 0 ? questions[currentQuestionIndex].question : 'No questions available' }}"
+            class="question-label"
+            textWrap="true" />
+        <ListView
+            items="{{ questions.length > 0 ? questions[currentQuestionIndex].answers : [] }}"
+            class="options-list"
+            itemTap="handleOptionSelect">
+            <ListView.itemTemplate>
+                <StackLayout class="option-item">
+                    <Label text="{{ $value }}" class="answer-label" textWrap="true" />
+                </StackLayout>
+            </ListView.itemTemplate>
+        </ListView>
+        <Button
+            text="Submit"
+            tap="handleSubmit"
+            visibility="{{ quizCompleted ? 'visible' : 'collapsed' }}"
+            class="submit-btn" />
+    </StackLayout>
 </Page>
