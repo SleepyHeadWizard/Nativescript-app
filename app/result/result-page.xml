@@ -10,8 +10,8 @@
             <ListView.itemTemplate>
                 <StackLayout class="question-item">
                     <Label text="{{ question }}" class="question-label" textWrap="true" />
-                    <Label text="Your Answer: {{ userAnswer }}" class="{{ isCorrect ? 'user-answer-correct' : 'user-answer-incorrect' }}" textWrap="true" />
-                    <Label text="Correct Answer: {{ correctAnswer }}" class="correct-answer-label" textWrap="true" />
+                    <Label text="{{ userAnswer }}" class="{{ isCorrect ? 'user-answer-correct' : 'user-answer-incorrect' }}" textWrap="true" />
+                    <Label text="{{ correctAnswer }}" class="correct-answer-label" textWrap="true" />
                 </StackLayout>
             </ListView.itemTemplate>
         </ListView>

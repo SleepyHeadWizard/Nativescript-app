@@ -58,8 +58,8 @@ class ResultViewModel extends Observable {
             const result: QuestionResult = {
                 questionNumber: index + 1,
                 question: question.question,
-                userAnswer: userAnswer,
-                correctAnswer: question.correctAnswer,
+                userAnswer: `Your Answer: ${userAnswer}`,
+                correctAnswer: `Correct Answer: ${question.correctAnswer}`,
                 isCorrect: isCorrect
             };
             
