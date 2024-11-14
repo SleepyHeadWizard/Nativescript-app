@@ -19,10 +19,5 @@
                 </StackLayout>
             </ListView.itemTemplate>
         </ListView>
-
-        <StackLayout orientation="horizontal" class="button-container">
-            <Button text="Retake Quiz" tap="onRetakeQuizTap" class="btn-retake" />
-            <Button text="Back to Home" tap="onBackToHomeTap" class="btn-home" />
-        </StackLayout>
     </StackLayout>
 </Page>
