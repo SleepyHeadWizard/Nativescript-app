@@ -91,7 +91,7 @@ export function onNavigatingTo(args: EventData) {
 export function onRetakeQuizTap() {
     console.log('Retaking quiz...');
     Frame.topmost().navigate({
-        moduleName: "cat-page",
+        moduleName: "cat/cat-page",
         clearHistory: true,
     });
 }
