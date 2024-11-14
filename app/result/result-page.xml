@@ -5,6 +5,10 @@
     <StackLayout class="result-container">
         <Label text="{{ congratulatoryMessage }}" class="h1 score-label" />
         <Progress value="{{ percentage }}" maxValue="100" class="score-progress" />
+        <StackLayout orientation="horizontal" class="button-container">
+            <Button text="Retake Quiz" tap="onRetakeQuizTap" class="btn-retake" />
+            <Button text="Back to Home" tap="onBackToHomeTap" class="btn-home" />
+        </StackLayout>
 
         <ListView items="{{ questionResults }}" class="questions-list">
             <ListView.itemTemplate>

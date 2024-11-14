@@ -10,5 +10,5 @@ export function onNavigatingTo(args: EventData) {
     Frame.topmost().navigate({
       moduleName: "login/login-page",
     });
-  }, 5000); // 5 seconds delay
+  }, 2000); // 5 seconds delay
 }
